@@ -155,6 +155,17 @@ async function load(msg) {
       p.addEventListener(Twitch.Player.ENDED, () => showMessage('Video ended', ENDED_TEXT));
     }
 
+    else if (m.platform === 'image') {
+      // Standby screen while someone picks a video
+      const img = document.createElement('img');
+      img.onload = () => showLoading(false);
+      img.onerror = () => showLoading(false);
+      img.src = m.src;
+      stage.appendChild(img);
+      current.player = img;
+      current.ready = true;
+    }
+
     else if (m.platform === 'kick') {
       const f = document.createElement('iframe');
       const muted = desired.volume === 0;
